@@ -12,14 +12,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Parse application/json
 app.use(bodyParser.json());
 
-app.post('/register', (req, res) => {
-  createUser(req.body)
+app.get('/example', (req, res) => {
+  console.log(req.query);
+  res.send('ok');
+});
+
+app.get('/register', (req, res) => {
+  createUser(req.query)
     .then(() => res.end('Ok'))
     .catch(() => res.end('Duplicate'));
 });
 
-app.post('/login', (req, res) => {
-  logUser(req.body).then(doc => {
+app.get('/login', (req, res) => {
+  logUser(req.query).then(doc => {
     if (doc) {
       res.end(JSON.stringify(doc.toObject()._id));
     } else {
@@ -28,20 +33,20 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/newRestaurant', (req, res) => {
-  createRestaurant(req.body)
+app.get('/newRestaurant', (req, res) => {
+  createRestaurant(req.query)
     .then(() => res.end('Ok'))
     .catch(() => res.end('Duplicate'));
 });
 
-app.post('/newRating', (req, res) => {
-  createRating(req.body)
+app.get('/newRating', (req, res) => {
+  createRating(req.query)
     .then(() => res.end('Ok'))
     .catch(() => res.end('Duplicate'));
 });
 
-app.post('/getTheRating', (req, res) => {
-  getTheRating(req.body).then(doc => {
+app.get('/getTheRating', (req, res) => {
+  getTheRating(req.query).then(doc => {
     if (doc) {
       res.end(JSON.stringify(doc.toObject()));
     } else {
