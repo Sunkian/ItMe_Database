@@ -6,7 +6,7 @@ const {ObjectId} = mongoose.Schema.Types;
 const ratingSchema_ = new mongoose.Schema({
   user: {type: ObjectId, ref: 'User'},
   restaurant: {type: ObjectId, ref: 'Restaurant'},
-  rating: String,
+  rating: Number,
   date: {type: Date, default: new Date()}
 });
 

@@ -4,11 +4,11 @@ mongoose.connect('mongodb://localhost:27017/itMe');
 
 const restaurantSchema_ = new mongoose.Schema({
   name: String,
-  placeId: {String, unique: true},
+  placeId: {type: String, unique: true},
   type: String,
   address: String,
-  priceLevel: Number,
-  ratingGoogle: Number
+  priceLevel: String,
+  ratingGoogle: String
 });
 
 const Restaurant_ = mongoose.model('Restaurant', restaurantSchema_);
