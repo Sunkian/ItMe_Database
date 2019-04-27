@@ -7,8 +7,10 @@ const userSchema_ = new mongoose.Schema({
     type: String,
     unique: true,
     validate: email =>
-       /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-    },
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+  },
   password: String,
   age: Number,
   gender: String
