@@ -7,7 +7,7 @@ const restaurantSchema_ = new mongoose.Schema({
   placeId: {type: String, unique: true},
   type: String,
   address: String,
-  priceLevel: Number,
+  priceLevel: {type:Number, default:3},
   ratingGoogle: Number
 });
 

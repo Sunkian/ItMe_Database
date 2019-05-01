@@ -86,24 +86,29 @@ const initNN = async () => {
 
   // Create a simple feed forward neural network with backpropagation
   net = new brain.NeuralNetwork(config);
-  console.log(dataSet);
   net.train(dataSet);
 };
 
-const recommandRestaurant = async (userId, listOfRestaurant) => {
-    const userInput = await createUserInputFromId(userId);
-    console.log(userInput);
-    const y = R.map(
-        restaurant => {console.log([...userInput,...restaurant]);
-        console.log(net.run([ 2.4, 0.46, 1, 8.6, 0.5, 3.1, 0.55, 1, 8.4, 1.5, 2.4, 0.39, 1, 9, -4, 0, 4, 4 ]));
-        return net.run([...userInput,...restaurant])}, listOfRestaurant);
-  console.log(y);
+const recommendRestaurant = async ({userId, listOfRestaurant}) => {
+    if (listOfRestaurant) {
+        const lor = R.map(JSON.parse, listOfRestaurant);
+        // console.log(userId, lor);
+        const userInput = await createUserInputFromId(userId);
+        const y = R.map(
+            restaurant =>
+                net.run([...userInput, ...restaurant]) * 5, lor);
+        console.log(y);
+        return R.indexOf(R.reduce(Math.max, -Infinity, y), y);
+    }
+    return 0;
 };
 
 initNN();
 
-const retour = recommandRestaurant('5cc993b1d4078a4b672a935a', [
-  [1, 2],
-  [2, 3],
-  [4, 4]
-]);
+// const retour = recommandRestaurant('5cc9e31d41403a5ddab96bc5', [
+//   [1, 2], //PRice level et ratingG tests
+//   [2, 3],
+//   [4, 4]
+// ]);
+
+module.exports = {recommendRestaurant, initNN};

@@ -4,13 +4,14 @@ const morgan = require('morgan'); // Affichage des evenement (gets et posts dans
 const {createUser, logUser} = require('./app/models/user');
 const {createRestaurant} = require('./app/models/restaurant');
 const {createRating, getTheRating} = require('./app/models/rating');
+const {recommendRestaurant, initNN} = require('./app/recommendation');
 
 app.use(morgan('tiny')); // Comment on veut afficher nos logs
 
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Parse application/json
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.get('/register', (req, res) => {
   // Get : create a new ressource, req : request, res : response, font partie de la norme http
@@ -39,7 +40,10 @@ app.get('/newRestaurant', (req, res) => {
 
 app.get('/newRating', (req, res) => {
   createRating(req.query)
-    .then(() => res.end(JSON.stringify('Ok')))
+    .then(() => {
+      res.end(JSON.stringify('Ok'));
+      initNN();
+    })
     .catch(() => res.end(JSON.stringify('Duplicate')));
 });
 
@@ -53,9 +57,10 @@ app.get('/getTheRating', (req, res) => {
   });
 });
 
-app.post('/recommendation', (req, res) => {
-  recommandRestaurant(req.query);
-  userId, listOfRestaurant;
+app.post ('/recommendation', async (req, res) => {
+  console.log(req.body);
+  res.end(JSON.stringify(await recommendRestaurant(req.body)));
+
 });
 
 app.listen(3000);
