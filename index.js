@@ -53,4 +53,9 @@ app.get('/getTheRating', (req, res) => {
   });
 });
 
+app.post('/recommendation', (req, res) => {
+  recommandRestaurant(req.query);
+  userId, listOfRestaurant;
+});
+
 app.listen(3000);

@@ -7,8 +7,8 @@ const restaurantSchema_ = new mongoose.Schema({
   placeId: {type: String, unique: true},
   type: String,
   address: String,
-  priceLevel: String,
-  ratingGoogle: String
+  priceLevel: Number,
+  ratingGoogle: Number
 });
 
 const Restaurant_ = mongoose.model('Restaurant', restaurantSchema_); // Déclaration du modèle pour s'en servir après

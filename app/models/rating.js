@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('./restaurant');
+require('./user');
 
 mongoose.connect('mongodb://localhost:27017/itMe');
 
@@ -27,6 +29,14 @@ const createRating = async obj => {
   return new Rating_(obj).save(); // On crée un nouveau si ya pas eu d'ancien
 };
 
-const getTheRating = obj => Rating_.findOne(obj).exec(); //RECUPER LE RATING QUI A DEJA ETAIT FAIT
+const getTheRating = obj => Rating_.findOne(obj).exec(); // RECUPER LE RATING QUI A DEJA ETAIT FAIT
 
-module.exports = {createRating, getTheRating};
+const getAllRatings = () =>
+  Rating_.find({})
+    .populate('restaurant', 'priceLevel ratingGoogle') // Dans restaurant, on va chercher le price level et le rating google
+    .populate('user', 'age gender')
+    .exec();
+
+const getRatingsForUser = id => Rating_.find({user: id}).exec();
+
+module.exports = {createRating, getTheRating, getAllRatings, getRatingsForUser};
